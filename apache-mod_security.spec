@@ -5,8 +5,8 @@
 
 Summary:	Mod_security is a DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	1.9.4
-Release:	%mkrel 3
+Version:	1.9.5
+Release:	%mkrel 1
 Group:		System/Servers
 License:	GPL
 URL:		http://www.modsecurity.org/
@@ -113,5 +113,3 @@ fi
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
 %attr(0755,root,root) %{_sbindir}/snort2modsec.pl
-
-
