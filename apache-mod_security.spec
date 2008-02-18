@@ -3,7 +3,7 @@
 %define mod_conf 82_%{mod_name}.conf
 %define mod_so %{mod_name}.so
 
-Summary:	Mod_security is a DSO module for the apache web server
+Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	1.9.5
 Release:	%mkrel 2
