@@ -27,7 +27,7 @@ BuildRequires:	apache-devel >= 2.2.4
 BuildRequires:	file
 BuildRequires:	snort-rules
 Epoch:		1
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 ModSecurity is an open source intrustion detection and prevention
