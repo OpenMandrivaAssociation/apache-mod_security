@@ -3,7 +3,7 @@
 %define mod_conf 82_%{mod_name}.conf
 %define mod_so %{mod_name}.so
 
-Summary:	DSO module for the apache web server
+Summary:	Intrusion detection and prevention module for the apache web server
 Name:		apache-%{mod_name}
 Version:	1.9.5
 Release:	%mkrel 6
@@ -30,7 +30,7 @@ Epoch:		1
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
-ModSecurity is an open source intrustion detection and prevention
+ModSecurity is an open source intrusion detection and prevention
 engine for web applications. It operates embedded into the web
 server, acting as a powerful umbrella - shielding applications
 from attacks.
