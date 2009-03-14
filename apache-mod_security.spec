@@ -6,8 +6,8 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	2.5.7
-Release:	%mkrel 2
+Version:	2.5.9
+Release:	%mkrel 1
 Group:		System/Servers
 License:	GPL
 URL:		http://www.modsecurity.org/
@@ -15,6 +15,7 @@ Source0:	http://www.modsecurity.org/download/modsecurity-apache_%{version}.tar.g
 Source1:	http://www.modsecurity.org/download/modsecurity-apache_%{version}.tar.gz.asc
 Source2:	mod_security.logrotate
 Source3:	%{mod_conf}
+Patch0:		modsecurity-apache_2.5.9-autopoo_fix.diff
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):	apache-conf >= 2.2.6
@@ -43,9 +44,21 @@ ModSecurity is an open source intrustion detection and prevention engine for
 web applications. It operates embedded into the web server, acting as a
 powerful umbrella - shielding applications from attacks.
 
+%package -n	mlogc
+Summary:	ModSecurity Audit Log Collector
+Group:		System/Servers
+
+%description -n	mlogc
+ModSecurity is an open source intrustion detection and prevention engine for
+web applications. It operates embedded into the web server, acting as a
+powerful umbrella - shielding applications from attacks.
+
+This package contains the ModSecurity Audit Log Collector.
+
 %prep
 
 %setup -q -n modsecurity-apache_%{version}
+%patch0 -p1
 
 cp %{SOURCE2} mod_security.logrotate
 cp %{SOURCE3} %{mod_conf}
@@ -63,8 +76,11 @@ pushd apache2
 popd
 
 %build
+%serverbuild
 
 pushd apache2
+rm configure
+sh ./buildconf
 %configure2_5x --localstatedir=/var/lib \
     --enable-performance-measurement \
     --with-apxs=%{_sbindir}/apxs \
@@ -76,6 +92,7 @@ pushd apache2
     --with-curl=%{_prefix}
 
 %make
+%make -C mlogc-src
 popd
 
 #%%check
@@ -87,6 +104,7 @@ popd
 rm -rf %{buildroot}
 
 install -d %{buildroot}%{_sbindir}
+install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_libdir}/apache-extramodules
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
 install -d %{buildroot}%{_sysconfdir}/httpd/conf/modsecurity/optional_rules
@@ -103,6 +121,10 @@ cp rules/README README.rules
 
 install -m0644 tools/rules-updater-example.conf %{buildroot}%{_sysconfdir}/rules-updater.conf
 install -m0755 tools/rules-updater.pl %{buildroot}%{_sbindir}/
+
+install -m0755 apache2/mlogc-src/mlogc %{buildroot}%{_bindir}/
+install -m0755 apache2/mlogc-src/mlogc-batch-load.pl %{buildroot}%{_bindir}/mlogc-batch-load
+install -m0644 apache2/mlogc-src/mlogc-default.conf %{buildroot}%{_sysconfdir}/httpd/conf/mlogc.conf
 
 %pre
 # if obsoleting apache-mod_security2
@@ -149,3 +171,10 @@ rm -rf %{buildroot}
 %attr(0640,root,root) %config(noreplace) %{_sysconfdir}/rules-updater.conf
 %attr(0755,root,root) %{_sbindir}/rules-updater.pl
 %attr(0755,root,root) %{_libdir}/apache-extramodules/%{mod_so}
+
+%files -n mlogc
+%defattr(-,root,root)
+%doc apache2/mlogc-src/INSTALL
+%attr(0640,root,apache) %config(noreplace) %{_sysconfdir}/httpd/conf/mlogc.conf
+%attr(0755,root,root) %{_bindir}/mlogc
+%attr(0755,root,root) %{_bindir}/mlogc-batch-load
