@@ -6,8 +6,8 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	2.5.9
-Release:	%mkrel 2
+Version:	2.5.10
+Release:	%mkrel 1
 Group:		System/Servers
 License:	GPL
 URL:		http://www.modsecurity.org/
@@ -15,7 +15,6 @@ Source0:	http://www.modsecurity.org/download/modsecurity-apache_%{version}.tar.g
 Source1:	http://www.modsecurity.org/download/modsecurity-apache_%{version}.tar.gz.asc
 Source2:	mod_security.logrotate
 Source3:	%{mod_conf}
-Patch0:		modsecurity-apache_2.5.9-autopoo_fix.diff
 Requires(pre): rpm-helper
 Requires(postun): rpm-helper
 Requires(pre):	apache-conf >= 2.2.6
@@ -58,7 +57,6 @@ This package contains the ModSecurity Audit Log Collector.
 %prep
 
 %setup -q -n modsecurity-apache_%{version}
-%patch0 -p1
 
 cp %{SOURCE2} mod_security.logrotate
 cp %{SOURCE3} %{mod_conf}
@@ -107,6 +105,7 @@ install -d %{buildroot}%{_sbindir}
 install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_libdir}/apache-extramodules
 install -d %{buildroot}%{_sysconfdir}/httpd/modules.d
+install -d %{buildroot}%{_sysconfdir}/httpd/conf/modsecurity/base_rules
 install -d %{buildroot}%{_sysconfdir}/httpd/conf/modsecurity/optional_rules
 install -d %{buildroot}%{_sysconfdir}/logrotate.d
 
@@ -115,6 +114,7 @@ install -m0644 %{mod_conf} %{buildroot}%{_sysconfdir}/httpd/modules.d/%{mod_conf
 install -m0644 mod_security.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/%{mod_name}
 
 install -m0644 rules/*.conf %{buildroot}%{_sysconfdir}/httpd/conf/modsecurity/
+install -m0644 rules/base_rules/*.conf %{buildroot}%{_sysconfdir}/httpd/conf/modsecurity/base_rules/
 install -m0644 rules/optional_rules/*.conf %{buildroot}%{_sysconfdir}/httpd/conf/modsecurity/optional_rules/
 cp rules/CHANGELOG CHANGELOG.rules
 cp rules/README README.rules
@@ -160,13 +160,15 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
-%doc CHANGES LICENSE README.TXT modsecurity.conf-minimal doc/* apache2/api
+%doc CHANGES LICENSE README.TXT modsecurity.conf-minimal doc/* apache2/api rules/util
 %doc CHANGELOG.rules README.rules MODSECURITY_LICENSING_EXCEPTION
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{mod_name}
 %attr(0755,root,root) %dir %{_sysconfdir}/httpd/conf/modsecurity
+%attr(0755,root,root) %dir %{_sysconfdir}/httpd/conf/modsecurity/base_rules
 %attr(0755,root,root) %dir %{_sysconfdir}/httpd/conf/modsecurity/optional_rules
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/modsecurity/*.conf
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/modsecurity/base_rules/*.conf
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/modsecurity/optional_rules/*.conf
 %attr(0640,root,root) %config(noreplace) %{_sysconfdir}/rules-updater.conf
 %attr(0755,root,root) %{_sbindir}/rules-updater.pl
