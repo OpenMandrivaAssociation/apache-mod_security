@@ -78,7 +78,7 @@ popd
 
 pushd apache2
 rm configure
-sh ./buildconf
+autoreconf --install
 %configure2_5x --localstatedir=/var/lib \
     --enable-performance-measurement \
     --with-apxs=%{_sbindir}/apxs \
