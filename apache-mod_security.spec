@@ -7,7 +7,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	2.5.12
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
 License:	GPL
 URL:		http://www.modsecurity.org/
@@ -144,15 +144,15 @@ if [ -f %{_sysconfdir}/logrotate.d/mod_security2 ]; then
 fi
 
 %post
-if [ -f %{_var}/lock/subsys/httpd ]; then
-    %{_initrddir}/httpd restart 1>&2;
-fi
+%if %mdkversion < 201010
+%_post_webapp
+%endif
 
 %postun
 if [ "$1" = "0" ]; then
-    if [ -f %{_var}/lock/subsys/httpd ]; then
-	%{_initrddir}/httpd restart 1>&2
-    fi
+	if [ -f %{_var}/lock/subsys/httpd ]; then
+	    %{_initrddir}/httpd restart 1>&2;
+	fi
 fi
 
 %clean
