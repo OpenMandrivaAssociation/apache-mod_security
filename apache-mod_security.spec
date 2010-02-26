@@ -7,7 +7,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	2.5.12
-Release:	%mkrel 2
+Release:	%mkrel 3
 Group:		System/Servers
 License:	GPL
 URL:		http://www.modsecurity.org/
@@ -30,7 +30,7 @@ BuildRequires:	apache-devel >= 2.2.6
 BuildRequires:	curl-devel
 BuildRequires:	file
 BuildRequires:	libxml2-devel
-BuildRequires:	lua-devel
+BuildRequires:	lua-devel >= 5.1
 BuildRequires:	pcre-devel
 BuildRequires:	perl
 Provides:	apache-mod_security2 = %{version}-%{release}
@@ -144,9 +144,9 @@ if [ -f %{_sysconfdir}/logrotate.d/mod_security2 ]; then
 fi
 
 %post
-%if %mdkversion < 201010
-%_post_webapp
-%endif
+if [ -f %{_var}/lock/subsys/httpd ]; then
+    %{_initrddir}/httpd restart 1>&2;
+fi
 
 %postun
 if [ "$1" = "0" ]; then
