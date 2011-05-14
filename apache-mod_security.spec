@@ -7,7 +7,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	2.5.12
-Release:	%mkrel 7
+Release:	%mkrel 8
 Group:		System/Servers
 License:	GPL
 URL:		http://www.modsecurity.org/
