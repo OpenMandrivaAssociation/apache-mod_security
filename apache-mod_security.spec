@@ -6,7 +6,7 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	2.6.0
+Version:	2.6.1
 Release:	%mkrel 1
 Group:		System/Servers
 License:	Apache License
