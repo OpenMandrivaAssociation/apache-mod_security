@@ -28,6 +28,7 @@ Requires:	gnupg
 Requires:	unzip
 Requires:	sendmail-command
 BuildRequires:	apache-devel >= 2.2.6
+BuildRequires:	autoconf automake libtool
 BuildRequires:	curl-devel
 BuildRequires:	file
 BuildRequires:	libxml2-devel
@@ -80,7 +81,7 @@ popd
 rm configure
 rm -rf autom4te.cache
 automake --add-missing --copy --foreign
-autoreconf --install
+autoreconf -fi
 autoheader
 
 %configure2_5x --localstatedir=/var/lib \
