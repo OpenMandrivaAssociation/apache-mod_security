@@ -7,7 +7,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	2.6.3
-Release:	%mkrel 1
+Release:	%mkrel 2
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.modsecurity.org/
@@ -74,9 +74,6 @@ pushd apache2
     mv mod_security2.c mod_security.c
 #    mv mod_security2_config.h.in mod_security_config.h.in
 popd
-
-# since we have no *.la files
-perl -pi -e "s|--link-libtool|--link-ld|g" build/find_ap*
 
 %build
 %serverbuild
