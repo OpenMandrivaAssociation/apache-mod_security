@@ -6,8 +6,8 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	2.6.2
-Release:	%mkrel 2
+Version:	2.6.3
+Release:	%mkrel 1
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.modsecurity.org/
@@ -75,12 +75,15 @@ pushd apache2
 #    mv mod_security2_config.h.in mod_security_config.h.in
 popd
 
+# since we have no *.la files
+perl -pi -e "s|--link-libtool|--link-ld|g" build/find_ap*
+
 %build
 %serverbuild
 
 rm configure
 rm -rf autom4te.cache
-automake --add-missing --copy --foreign
+#automake --add-missing --copy --foreign
 autoreconf -fi
 autoheader
 
