@@ -55,6 +55,7 @@ This package contains the ModSecurity Audit Log Collector.
 %setup -q -n modsecurity-apache_%{version} -a4
 
 cp %{SOURCE2} mod_security.logrotate
+cp %{SOURCE3} .
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
