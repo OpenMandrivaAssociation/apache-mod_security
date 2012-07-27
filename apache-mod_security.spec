@@ -5,8 +5,8 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	2.6.3
-Release:	3
+Version:	2.6.6
+Release:	1
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.modsecurity.org/
