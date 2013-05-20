@@ -1,3 +1,4 @@
 sources:
-  "modsecurity-apache_2.5.12-rules.tar.gz": d215c36155b27c036af8a8326683fe3c0d773628
-  "modsecurity-apache_2.6.7.tar.gz": 2e497f32f967ea4405d797dbdca9c7af6cc51198
+  modsecurity-apache_2.5.12-rules.tar.gz: d215c36155b27c036af8a8326683fe3c0d773628
+  modsecurity-apache_2.6.7.tar.gz: 2e497f32f967ea4405d797dbdca9c7af6cc51198
+  modsecurity-apache_2.7.3.tar.gz: 38b352e85a9d12b26a1da9433051b41e9f196936

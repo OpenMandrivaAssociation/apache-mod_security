@@ -6,13 +6,13 @@
 
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
-Version:	2.6.7
-Release:	%mkrel 1
+Version:	2.7.3
+Release:	1
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.modsecurity.org/
-Source0:	http://www.modsecurity.org/download/modsecurity-apache_%{version}.tar.gz
-Source1:	http://www.modsecurity.org/download/modsecurity-apache_%{version}.tar.gz.asc
+Source0:	http://www.modsecurity.org/tarball/2.7.3/modsecurity-apache_%{version}.tar.gz
+Source1:	http://www.modsecurity.org/tarball/2.7.3/modsecurity-apache_%{version}.tar.gz
 Source2:	mod_security.logrotate
 Source3:	%{mod_conf}
 Source4:	modsecurity-apache_2.5.12-rules.tar.gz
@@ -38,7 +38,6 @@ BuildRequires:	perl
 Provides:	apache-mod_security2 = %{version}-%{release}
 Obsoletes:	apache-mod_security2
 Epoch:		1
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 ModSecurity is an open source intrustion detection and prevention engine for
@@ -114,8 +113,6 @@ rm -rf autom4te.cache
 #popd
 
 %install
-rm -rf %{buildroot}
-
 install -d %{buildroot}%{_sbindir}
 install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_libdir}/apache-extramodules
@@ -176,11 +173,9 @@ if [ "$1" = "0" ]; then
 fi
 
 %clean
-rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
-%doc CHANGES LICENSE README.TXT modsecurity.conf-minimal doc/* apache2/api rules/util
+%doc CHANGES LICENSE README.TXT modsecurity.conf-minimal doc/* rules/util
 %doc CHANGELOG.rules README.rules
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/%{mod_conf}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{mod_name}
@@ -199,7 +194,6 @@ rm -rf %{buildroot}
 %attr(0755,root,root) %{_libdir}/apache-extramodules/mod_var_remote_addr_port.so
 
 %files -n mlogc
-%defattr(-,root,root)
 %doc mlogc/INSTALL
 %attr(0640,root,apache) %config(noreplace) %{_sysconfdir}/httpd/conf/mlogc.conf
 %attr(0755,root,root) %{_bindir}/mlogc
