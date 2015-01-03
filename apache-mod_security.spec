@@ -35,6 +35,7 @@ BuildRequires:	libxml2-devel
 BuildRequires:	lua-devel >= 5.1
 BuildRequires:	pcre-devel
 BuildRequires:	perl
+BuildRequires:	db-devel
 Provides:	apache-mod_security2 = %{version}-%{release}
 Obsoletes:	apache-mod_security2
 Epoch:		1
