@@ -7,7 +7,7 @@
 Summary:	DSO module for the apache web server
 Name:		apache-%{mod_name}
 Version:	2.7.3
-Release:	9
+Release:	10
 Group:		System/Servers
 License:	Apache License
 URL:		http://www.modsecurity.org/
