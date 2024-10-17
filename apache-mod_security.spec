@@ -10,7 +10,7 @@ Version:	2.7.3
 Release:	12
 Group:		System/Servers
 License:	Apache License
-URL:		http://www.modsecurity.org/
+URL:		https://www.modsecurity.org/
 Source0:	http://www.modsecurity.org/tarball/2.7.3/modsecurity-apache_%{version}.tar.gz
 Source1:	http://www.modsecurity.org/tarball/2.7.3/modsecurity-apache_%{version}.tar.gz.asc
 Source2:	mod_security.logrotate
